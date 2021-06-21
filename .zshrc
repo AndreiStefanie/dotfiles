@@ -107,4 +107,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-cd ~
+if [[ $(pwd) == /mnt/c/Users/* ]]; then
+  cd ~
+fi
