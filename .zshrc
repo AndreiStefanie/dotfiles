@@ -8,8 +8,9 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 PROTOC_BIN=/usr/local/protoc/bin
+LINKERD_BIN=/home/andrei/.linkerd2/bin
 
-export PATH=$PATH:$GOROOT/bin:$GOPATH:$GOBIN:$PROTOC_BIN
+export PATH=$PATH:$GOROOT/bin:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
