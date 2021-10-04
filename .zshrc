@@ -9,8 +9,9 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 PROTOC_BIN=/usr/local/protoc/bin
 LINKERD_BIN=/home/andrei/.linkerd2/bin
+PYTHON_USER_BASE=/home/andrei/.local/bin
 
-export PATH=$PATH:$GOROOT/bin:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN
+export PATH=$PATH:$GOROOT/bin:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -81,6 +82,7 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(git nvm terraform aws docker docker-compose gcloud golang npm kubectl safe-paste redis-cli)
 
 source $ZSH/oh-my-zsh.sh
+source /etc/bash_completion.d/az
 
 # User configuration
 
