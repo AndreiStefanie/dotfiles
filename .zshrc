@@ -97,6 +97,7 @@ plugins=(
   safe-paste
   helm
   redis-cli
+  yarn-autocompletions
 )
 
 source $ZSH/oh-my-zsh.sh
