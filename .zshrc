@@ -12,6 +12,8 @@ LINKERD_BIN=/home/andrei/.linkerd2/bin
 STRIPE_BIN=/usr/local/stripe
 PYTHON_USER_BASE=/home/andrei/.local/bin
 
+export GOPRIVATE=github.com/cyscale
+
 export PATH=$PATH:$GOROOT/bin:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN
 
 # Set name of the theme to load --- if set to "random", it will
@@ -98,6 +100,7 @@ plugins=(
   helm
   redis-cli
   yarn-autocompletions
+  artisan
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -128,6 +131,7 @@ source /etc/bash_completion.d/az
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
 
 if [[ $(pwd) == /mnt/c/Users/* ]]; then
   cd ~
