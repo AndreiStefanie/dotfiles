@@ -99,6 +99,7 @@ plugins=(
   safe-paste
   helm
   redis-cli
+  yarn-autocompletions
   artisan
   kubetail
 )
