@@ -100,6 +100,7 @@ plugins=(
   helm
   redis-cli
   artisan
+  kubetail
 )
 
 source $ZSH/oh-my-zsh.sh
