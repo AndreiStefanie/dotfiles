@@ -2,15 +2,15 @@
 #export PATH=/usr/local/go/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/andrei/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 PROTOC_BIN=/usr/local/protoc/bin
-LINKERD_BIN=/home/andrei/.linkerd2/bin
+LINKERD_BIN=$HOME/.linkerd2/bin
 STRIPE_BIN=/usr/local/stripe
-PYTHON_USER_BASE=/home/andrei/.local/bin
+PYTHON_USER_BASE=$HOME/.local/bin
 
 export GOPRIVATE=github.com/cyscale
 
@@ -105,7 +105,6 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-source /etc/bash_completion.d/az
 
 # User configuration
 
