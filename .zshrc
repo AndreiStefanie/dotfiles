@@ -2,19 +2,21 @@
 #export PATH=/usr/local/go/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/andrei/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
-export GOROOT=/usr/local/go
+# export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 PROTOC_BIN=/usr/local/protoc/bin
-LINKERD_BIN=/home/andrei/.linkerd2/bin
+LINKERD_BIN=$HOME/.linkerd2/bin
 STRIPE_BIN=/usr/local/stripe
-PYTHON_USER_BASE=/home/andrei/.local/bin
+PYTHON_USER_BASE=$HOME/.local/bin
 
 export GOPRIVATE=github.com/cyscale
 
-export PATH=$PATH:$GOROOT/bin:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN
+export PATH=$PATH:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN
+
+export KUBE_EDITOR=nano
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -102,10 +104,10 @@ plugins=(
   yarn-autocompletions
   artisan
   kubetail
+  asdf
 )
 
 source $ZSH/oh-my-zsh.sh
-source /etc/bash_completion.d/az
 
 # User configuration
 
@@ -133,6 +135,9 @@ source /etc/bash_completion.d/az
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
+alias python=/opt/homebrew/bin/python3
+alias pip=/opt/homebrew/bin/pip
+alias multipull="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;"
 
 if [[ $(pwd) == /mnt/c/Users/* ]]; then
   cd ~
@@ -145,3 +150,22 @@ fix_wsl2_interop() {
         fi
     done
 }
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+if ((!${fpath[(I) / opt / homebrew / etc / bash_completion.d]})); then
+  FPATH=/opt/homebrew/etc/bash_completion.d:$FPATH
+fi
+
+source ~/.oh-my-zsh/completions/az
+
+exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if exists thefuck; then
+  eval $(thefuck --alias)
+fi
+
