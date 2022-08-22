@@ -1,3 +1,5 @@
+ZSH_DISABLE_COMPFIX="true"
+
 # If you come from bash you might have to change your $PATH.
 #export PATH=/usr/local/go/bin:$PATH
 
@@ -156,10 +158,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 if ((!${fpath[(I) / opt / homebrew / etc / bash_completion.d]})); then
-  FPATH=/opt/homebrew/etc/bash_completion.d:$FPATH
+  fpath=(/opt/homebrew/etc/bash_completion.d $fpath)
 fi
 
-source ~/.oh-my-zsh/completions/az
+source ~/.oh-my-zsh/completions/_az
+source ~/.oh-my-zsh/completions/_gita
 
 exists() {
   command -v "$1" >/dev/null 2>&1
