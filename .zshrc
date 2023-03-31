@@ -16,7 +16,7 @@ PYTHON_USER_BASE=$HOME/.local/bin
 
 export GOPRIVATE=github.com/cyscale
 
-export PATH=$PATH:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN
+export PATH=$PATH:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN:${HOME}/.krew/bin:${HOME}/.bin
 
 export KUBE_EDITOR=nano
 
@@ -171,4 +171,3 @@ exists() {
 if exists thefuck; then
   eval $(thefuck --alias)
 fi
-
