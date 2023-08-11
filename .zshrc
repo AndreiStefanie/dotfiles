@@ -103,11 +103,16 @@ plugins=(
   safe-paste
   helm
   redis-cli
-  yarn-autocompletions
-  artisan
   kubetail
   asdf
 )
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -153,16 +158,20 @@ fix_wsl2_interop() {
     done
 }
 
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
+[ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
 if ((!${fpath[(I) / opt / homebrew / etc / bash_completion.d]})); then
   fpath=(/opt/homebrew/etc/bash_completion.d $fpath)
 fi
 
 source ~/.oh-my-zsh/completions/_az
-source ~/.oh-my-zsh/completions/_gita
+#source ~/.oh-my-zsh/completions/_gita
 
 exists() {
   command -v "$1" >/dev/null 2>&1
@@ -171,3 +180,6 @@ exists() {
 if exists thefuck; then
   eval $(thefuck --alias)
 fi
+
+eval "$(mcfly init zsh)"
+
