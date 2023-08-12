@@ -183,3 +183,7 @@ fi
 
 eval "$(mcfly init zsh)"
 
+autoload -U +X compinit && compinit -i
+autoload -U +X bashcompinit && bashcompinit -i
+complete -o nospace -F /opt/homebrew/bin/aliyun aliyun
+
