@@ -145,6 +145,10 @@ alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
 alias python=/opt/homebrew/bin/python3
 alias pip=/opt/homebrew/bin/pip
 alias multipull="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;"
+alias ls="exa -l"
+alias df=duf
+alias find=fd
+alias man=tldr
 
 if [[ $(pwd) == /mnt/c/Users/* ]]; then
   cd ~
@@ -171,7 +175,6 @@ if ((!${fpath[(I) / opt / homebrew / etc / bash_completion.d]})); then
 fi
 
 source ~/.oh-my-zsh/completions/_az
-#source ~/.oh-my-zsh/completions/_gita
 
 exists() {
   command -v "$1" >/dev/null 2>&1
@@ -186,4 +189,14 @@ eval "$(mcfly init zsh)"
 autoload -U +X compinit && compinit -i
 autoload -U +X bashcompinit && bashcompinit -i
 complete -o nospace -F /opt/homebrew/bin/aliyun aliyun
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+  if ! grep -q "pam_tid.so" /etc/pam.d/sudo; then
+    echo "Updating /etc/pam.d/sudo to activate Touch ID authentication permissions from Terminal:"
+    echo auth sufficient pam_tid.so | sudo tee -a /etc/pam.d/sudo
+    echo "pam_tid.so permissions updated:
+
+    $(cat /etc/pam.d/sudo)"
+  fi
+fi
 
