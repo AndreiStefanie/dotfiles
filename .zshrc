@@ -147,7 +147,7 @@ alias pip=/opt/homebrew/bin/pip
 alias multipull="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;"
 alias ls="exa -l"
 alias df=duf
-alias find=fd
+# alias find=fd
 alias man=tldr
 
 if [[ $(pwd) == /mnt/c/Users/* ]]; then
@@ -200,3 +200,6 @@ if [[ $OSTYPE == 'darwin'* ]]; then
   fi
 fi
 
+
+# krew path
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
