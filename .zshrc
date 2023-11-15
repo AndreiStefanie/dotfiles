@@ -147,8 +147,9 @@ alias pip=/opt/homebrew/bin/pip
 alias multipull="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;"
 alias ls="exa -l"
 alias df=duf
-# alias find=fd
 alias man=tldr
+alias jqd=jq -R 'fromjson? | select(.level!="DEBUG")'
+alias jqerr=jq -R 'fromjson? | select(.level=="ERROR")'
 
 if [[ $(pwd) == /mnt/c/Users/* ]]; then
   cd ~
@@ -199,7 +200,6 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     $(cat /etc/pam.d/sudo)"
   fi
 fi
-
 
 # krew path
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
