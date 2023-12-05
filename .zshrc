@@ -16,7 +16,7 @@ PYTHON_USER_BASE=$HOME/.local/bin
 
 export GOPRIVATE=github.com/cyscale
 
-export PATH=$PATH:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN:${HOME}/.krew/bin:${HOME}/.bin
+export PATH=$PATH:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN:${HOME}/.bin:${KREW_ROOT:-$HOME/.krew}/bin
 
 export KUBE_EDITOR=nano
 
@@ -151,6 +151,10 @@ alias man=tldr
 alias jqd=jq -R 'fromjson? | select(.level!="DEBUG")'
 alias jqerr=jq -R 'fromjson? | select(.level=="ERROR")'
 
+awsDeleteSecret() {
+  aws secretsmanager delete-secret --secret-id "$1" --force-delete-without-recovery
+}
+
 if [[ $(pwd) == /mnt/c/Users/* ]]; then
   cd ~
 fi
@@ -201,5 +205,3 @@ if [[ $OSTYPE == 'darwin'* ]]; then
   fi
 fi
 
-# krew path
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
