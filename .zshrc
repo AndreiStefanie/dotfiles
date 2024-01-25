@@ -4,16 +4,18 @@ export ZSH="$HOME/.oh-my-zsh"
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
+
+export GOPRIVATE=github.com/cyscale
 PROTOC_BIN=/usr/local/protoc/bin
 LINKERD_BIN=$HOME/.linkerd2/bin
 STRIPE_BIN=/usr/local/stripe
 PYTHON_USER_BASE=$HOME/.local/bin
-KREW_BIN=${KREW_ROOT:-$HOME/.krew}/bin
-MYSQL_BIN=/home/linuxbrew/.linuxbrew/opt/mysql-client/bin
+KREW_BIN=${KREW_ROOT:-$HOME}/.krew/bin
+MYSQL_BIN=$HOMEBREW_PREFIX/opt/mysql-client/bin
+BREW_BIN=$HOMEBREW_PREFIX/bin
+HOME_BIN=$HOME/.bin
 
-export GOPRIVATE=github.com/cyscale
-
-export PATH=$PATH:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN:${HOME}/.bin:$KREW_BIN:$MYSQL_BIN
+export PATH=$PATH:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN:$HOME_BIN:$KREW_BIN:$MYSQL_BIN:$BREW_BIN
 
 export KUBE_EDITOR=vim
 
@@ -42,11 +44,16 @@ plugins=(
   asdf
 )
 
-if type brew &>/dev/null; then
+exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if exists brew; then
   FPATH=$(brew --prefix)/share/zsh-completions:$(brew --prefix)/share/zsh/site-functions:$FPATH
 
-  autoload -Uz compinit
-  compinit
+  autoload -U +X compinit && compinit -i
+  autoload -U +X bashcompinit && bashcompinit -i
+  complete -o nospace -F $BREW_BIN/aliyun aliyun
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -69,14 +76,14 @@ source $ZSH/oh-my-zsh.sh
 # export ARCHFLAGS="-arch x86_64"
 
 alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
-alias python=/opt/homebrew/bin/python3
-alias pip=/opt/homebrew/bin/pip
+alias python=$BREW_BIN/python3
+alias pip=$BREW_BIN/pip
 alias multipull="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;"
 alias ls="exa -l"
 alias df=duf
 alias man=tldr
-alias jqd=jq -R 'fromjson? | select(.level!="DEBUG")'
-alias jqerr=jq -R 'fromjson? | select(.level=="ERROR")'
+alias jqd="jq -R 'fromjson? | select(.level!=\"DEBUG]\")'"
+alias jqerr="jq -R 'fromjson? | select(.level==\"ERROR\")'"
 
 awsDeleteSecret() {
   aws secretsmanager delete-secret --secret-id "$1" --force-delete-without-recovery
@@ -126,20 +133,15 @@ fi
 
 source ~/.oh-my-zsh/completions/_az
 
-exists() {
-  command -v "$1" >/dev/null 2>&1
-}
-
 if exists thefuck; then
   eval $(thefuck --alias)
 fi
 
-autoload -U +X compinit && compinit -i
-autoload -U +X bashcompinit && bashcompinit -i
-complete -o nospace -F /opt/homebrew/bin/aliyun aliyun
+if exists mcfly; then
+  eval "$(mcfly init zsh)"
+fi
 
 if [[ $OSTYPE == 'darwin'* ]]; then
-  eval "$(mcfly init zsh)"
   if ! grep -q "pam_tid.so" /etc/pam.d/sudo; then
     echo "Updating /etc/pam.d/sudo to activate Touch ID authentication permissions from Terminal:"
     echo auth sufficient pam_tid.so | sudo tee -a /etc/pam.d/sudo
