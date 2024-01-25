@@ -134,13 +134,12 @@ if exists thefuck; then
   eval $(thefuck --alias)
 fi
 
-eval "$(mcfly init zsh)"
-
 autoload -U +X compinit && compinit -i
 autoload -U +X bashcompinit && bashcompinit -i
 complete -o nospace -F /opt/homebrew/bin/aliyun aliyun
 
 if [[ $OSTYPE == 'darwin'* ]]; then
+  eval "$(mcfly init zsh)"
   if ! grep -q "pam_tid.so" /etc/pam.d/sudo; then
     echo "Updating /etc/pam.d/sudo to activate Touch ID authentication permissions from Terminal:"
     echo auth sufficient pam_tid.so | sudo tee -a /etc/pam.d/sudo
