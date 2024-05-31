@@ -89,13 +89,11 @@ awsDeleteSecret() {
   aws secretsmanager delete-secret --secret-id "$1" --force-delete-without-recovery
 }
 
-assumeRole() {
-  local role="${2:-OrganizationAccountAccessRole}"
-
+awsAssumeRole() {
   export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
     $(aws sts assume-role \
-      --role-arn "arn:aws:iam::${1}:role/${role}" \
-      --role-session-name "$1" \
+      --role-arn "$1" \
+      --role-session-name cli \
       --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
       --output text))
 }
@@ -150,3 +148,5 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     $(cat /etc/pam.d/sudo)"
   fi
 fi
+
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
