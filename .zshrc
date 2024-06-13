@@ -6,16 +6,17 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 
 export GOPRIVATE=github.com/cyscale
+export HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-/home/linuxbrew/.linuxbrew}
 PROTOC_BIN=/usr/local/protoc/bin
 LINKERD_BIN=$HOME/.linkerd2/bin
 STRIPE_BIN=/usr/local/stripe
 PYTHON_USER_BASE=$HOME/.local/bin
-KREW_BIN=${KREW_ROOT:-$HOME}/.krew/bin
+KREW_BIN=${KREW_ROOT:-$HOME/.krew}/bin
 MYSQL_BIN=$HOMEBREW_PREFIX/opt/mysql-client/bin
 BREW_BIN=$HOMEBREW_PREFIX/bin
 HOME_BIN=$HOME/.bin
 
-export PATH=$PATH:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN:$HOME_BIN:$KREW_BIN:$MYSQL_BIN:$BREW_BIN
+export PATH="$PATH:$BREW_BIN:$GOPATH:$GOBIN:$PROTOC_BIN:$LINKERD_BIN:$PYTHON_USER_BASE:$STRIPE_BIN:$HOME_BIN:$KREW_BIN:$MYSQL_BIN"
 
 export KUBE_EDITOR=vim
 
@@ -50,6 +51,9 @@ exists() {
 
 if exists brew; then
   FPATH=$(brew --prefix)/share/zsh-completions:$(brew --prefix)/share/zsh/site-functions:$FPATH
+  if ((!${fpath[(I) / opt / homebrew / etc / bash_completion.d]})); then
+    fpath=(/opt/homebrew/etc/bash_completion.d $fpath)
+  fi
 
   autoload -U +X compinit && compinit -i
   autoload -U +X bashcompinit && bashcompinit -i
@@ -106,7 +110,6 @@ clearAWSSession() {
 
 if [[ $(pwd) == /mnt/c/Users/* ]]; then
   cd ~
-  dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus --nofork --nopidfile --syslog-only &
 fi
 
 fix_wsl2_interop() {
@@ -117,17 +120,9 @@ fix_wsl2_interop() {
   done
 }
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"                                       # This loads nvm
 [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
-
-if ((!${fpath[(I) / opt / homebrew / etc / bash_completion.d]})); then
-  fpath=(/opt/homebrew/etc/bash_completion.d $fpath)
-fi
 
 source ~/.oh-my-zsh/completions/_az
 
