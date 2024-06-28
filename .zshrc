@@ -88,6 +88,7 @@ alias df=duf
 alias man=tldr
 alias jqd="jq -R 'fromjson? | select(.level!=\"DEBUG]\")'"
 alias jqerr="jq -R 'fromjson? | select(.level==\"ERROR\")'"
+alias k=kubectl
 
 awsDeleteSecret() {
   aws secretsmanager delete-secret --secret-id "$1" --force-delete-without-recovery
