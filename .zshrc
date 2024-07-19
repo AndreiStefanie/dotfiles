@@ -83,7 +83,7 @@ alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
 alias python=$BREW_BIN/python3
 alias pip=$BREW_BIN/pip
 alias multipull="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;"
-alias ls="exa -l"
+alias ls="eza -l"
 alias df=duf
 alias man=tldr
 alias jqd="jq -R 'fromjson? | select(.level!=\"DEBUG]\")'"
