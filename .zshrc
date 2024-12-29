@@ -146,3 +146,5 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 fi
 
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+eval "$(zoxide init zsh)"
