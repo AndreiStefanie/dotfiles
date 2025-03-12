@@ -43,6 +43,7 @@ plugins=(
   redis-cli
   kubetail
   asdf
+  direnv
 )
 
 exists() {
