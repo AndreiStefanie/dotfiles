@@ -105,6 +105,16 @@ awsAssumeRole() {
       --output text))
 }
 
+awsMfaLogin() {
+  export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
+    $(aws sts get-session-token \
+      --serial-number "$AWS_MFA_SERIAL" \
+      --token-code "$1" \
+      --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
+      --output text))
+  unset AWS_PROFILE
+}
+
 clearAWSSession() {
   unset AWS_ACCESS_KEY_ID
   unset AWS_SECRET_ACCESS_KEY
